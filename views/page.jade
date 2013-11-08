@@ -1,8 +1,9 @@
 extends layout
 
 block content
-  h2 Screenshots for #{page}
+  h2 Screenshots for "#{page}"
   ol.screenshots
     each screenshot in screenshots
       li.screenshot
-        img(src=screenshot)
+        h3= screenshot.date
+        img(src=screenshot.src)

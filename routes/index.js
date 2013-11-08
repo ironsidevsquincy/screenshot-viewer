@@ -8,22 +8,35 @@ var AWS = require('aws-sdk'),
     s3  = new AWS.S3();
 
 exports.index = function(req, res){
-    s3.listObjects({Bucket: 'aws-frontend-store', Prefix: 'CODE/screenshots'}, function(err, data) {
-        var pages = _.unique(data.Contents.map(function(content) {
-            return content.Key.split('/')[2];
-        }));
-        res.render('index', { pages: pages });
+    var env = req.query.env || 'code';
+    s3.listObjects({Bucket: 'aws-frontend-store', Prefix: env.toUpperCase() + '/screenshots'}, function(err, data) {
+        var pages = data.Contents
+            // pull out page url (3 part of the key)
+            .map(function(content) {
+                return content.Key.split('/')[2];
+            });
+        res.render('index', { pages: _.unique(pages) });
     });
 };
 
 exports.page = function(req, res){
     var page = req.query.page,
+        env = req.query.env || 'code',
         breakpoint = req.query.breakpoint || 'mobile';
-    // get screenshot
-    s3.listObjects({Bucket: 'aws-frontend-store', Prefix: 'CODE/screenshots/' + page + '/' + breakpoint}, function(err, data) {
-        var screenshots = _.unique(data.Contents.map(function(content) {
-            return 'https://s3-eu-west-1.amazonaws.com/' + data.Name + '/' + content.Key
-        }));
+    // get screenshots for this page, breakpoint and env
+    s3.listObjects({Bucket: 'aws-frontend-store', Prefix: env.toUpperCase() + '/screenshots/' + page + '/' + breakpoint}, function(err, data) {
+        var screenshots = data.Contents
+            // order by date
+            .sort(function(screenshotOne, screenshotTwo) {
+                return screenshotTwo.LastModified - screenshotOne.LastModified;
+            })
+            // pull out src and date
+            .map(function(content) {
+                return {
+                    date: content.Key.split('/').slice(4, 8).join('/').split('.').shift(),
+                    src: 'https://' + data.Name + '.s3.amazonaws.com/' + content.Key
+                }
+            });
         res.render('page', { page: page, screenshots: screenshots });
     });
 };
