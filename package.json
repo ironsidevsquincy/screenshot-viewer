@@ -3,6 +3,7 @@
     "version": "0.0.1",
     "private": true,
     "scripts": {
+        "postinstall": "(cd public/javascripts; bower install)",
         "start": "nodemon app.js"
     },
     "dependencies": {

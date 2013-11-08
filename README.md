@@ -12,7 +12,6 @@ Setup
 -----
 
     $ npm install
-    $ (cd public/javascripts; bower install)
 
 To run
 ------
