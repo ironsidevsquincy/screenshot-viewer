@@ -3,6 +3,6 @@ extends layout
 block content
   h2 Pages
   ul
-    each url in urls 
+    each page in pages
       li
-        a(href = '/page?url=' + url)= url
+        a(href = '/page?page=' + page)= page

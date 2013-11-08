@@ -1,8 +1,17 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
+}
+
+.screenshots {
+    padding: 0;
+    list-style: none;
+}
+.screenshot {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 20px;
 }
