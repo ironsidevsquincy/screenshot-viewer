@@ -1,7 +1,10 @@
 extends layout
 
 block content
-  h2 Screenshots for "#{page}"
+  ul.nav.nav-tabs
+    each size in ['mobile', 'tablet', 'desktop', 'wide']
+      li(class=(breakpoint === size) ? 'active' : '')
+        a(href='?page=' + page + '&breakpoint=' + size)= size[0].toUpperCase() + size.slice(1)
   ol.screenshots
     each screenshot in screenshots
       li.screenshot

@@ -11,7 +11,7 @@ exports.index = function(req, res){
     var env = req.query.env || 'code';
     s3.listObjects({Bucket: 'aws-frontend-store', Prefix: env.toUpperCase() + '/screenshots'}, function(err, data) {
         var pages = data.Contents
-            // pull out page url (3 part of the key)
+            // pull out page url (3rd part of the key)
             .map(function(content) {
                 return content.Key.split('/')[2];
             });
@@ -37,6 +37,6 @@ exports.page = function(req, res){
                     src: 'https://' + data.Name + '.s3.amazonaws.com/' + content.Key
                 }
             });
-        res.render('page', { page: page, screenshots: screenshots });
+        res.render('page', { page: page, breakpoint: breakpoint, screenshots: screenshots });
     });
 };

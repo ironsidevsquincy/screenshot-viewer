@@ -2,10 +2,21 @@ doctype 5
 html
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/javascripts/components/bootstrap/dist/css/bootstrap.min.css')
     link(rel='stylesheet', href='/javascripts/components/bootstrap/dist/css/bootstrap-theme.min.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(type='text/javascript', src='/javascripts/components/jquery/jquery.min.js')
     script(type='text/javascript', src='/javascripts/components/bootstrap/dist/js/bootstrap.min.js')
   body
-    h1 Screenshot Viewer
+    nav.navbar.navbar-default
+      div.navbar-header
+        a.navbar-brand(href='/') Screenshot Viewer
+      ul.nav.navbar-nav
+        li.dropdown
+          a.dropdown-toggle(href='#' data-toggle='dropdown') Pages
+            b.caret
+          ul.dropdown-menu
+            each page in ['uk', 'us', 'au']
+              li
+                a(href='/page?page=' + page)= '/' + page
     block content
