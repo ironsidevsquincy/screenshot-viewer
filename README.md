@@ -1,17 +1,10 @@
-screenshot-viewer
+Screenshot Viewer
 =================
-
-View screenshots
 
 Requirements
 ------------
 
  * [Node.js](http://nodejs.org/)
-
-Setup
------
-
-    $ npm install
 
 To run
 ------
