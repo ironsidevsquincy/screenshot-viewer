@@ -16,7 +16,7 @@ html
           a.dropdown-toggle(href='#' data-toggle='dropdown') Pages
             b.caret
           ul.dropdown-menu
-            each page in ['uk', 'us', 'au']
+            each page in pages
               li
                 a(href='/page?page=' + page)= '/' + page
     block content

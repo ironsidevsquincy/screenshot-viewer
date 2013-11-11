@@ -2,7 +2,7 @@ extends layout
 
 block content
   ul.nav.nav-tabs
-    each size in ['mobile', 'tablet', 'desktop', 'wide']
+    each size in breakpoints
       li(class=(breakpoint === size) ? 'active' : '')
         a(href='?page=' + page + '&breakpoint=' + size)= size[0].toUpperCase() + size.slice(1)
   ol.screenshots
