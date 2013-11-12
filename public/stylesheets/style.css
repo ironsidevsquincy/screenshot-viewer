@@ -1,9 +1,15 @@
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
-
+h2 {
+    padding-left: 20px;
+}
 a {
   color: #00B7FF;
+}
+
+.nav-tabs {
+    padding-left: 20px;
 }
 
 .screenshots {

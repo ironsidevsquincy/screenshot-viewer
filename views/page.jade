@@ -1,6 +1,7 @@
 extends layout
 
 block content
+  h2 /#{page}
   ul.nav.nav-tabs
     each size in breakpoints
       li(class=(breakpoint === size) ? 'active' : '')
