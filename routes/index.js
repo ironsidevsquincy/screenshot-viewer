@@ -19,7 +19,7 @@ exports.index = function(req, res){
     });
 };
 
-exports.page = function(req, res){
+exports.pages = function(req, res){
     var page = req.query.page,
         breakpoint = req.query.breakpoint || 'mobile';
     // get the available pages
