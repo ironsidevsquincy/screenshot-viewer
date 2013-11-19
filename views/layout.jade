@@ -18,5 +18,5 @@ html
           ul.dropdown-menu
             each page in pages
               li
-                a(href='/pages?page=' + page)= '/' + page
+                a(href='/pages?page=' + encodeURIComponent(page))= '/' + page
     block content

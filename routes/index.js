@@ -5,6 +5,7 @@
 
 var AWS = require('aws-sdk'),
     _   = require('lodash'),
+    moment = require('moment'),
     s3  = new AWS.S3(),
     env = 'CODE';
 
@@ -13,21 +14,21 @@ exports.index = function(req, res){
         var pages = data.CommonPrefixes
             // pull out page url (3rd part of the key)
             .map(function(prefix) {
-                return prefix.Prefix.split('/')[2];
+                return decodeURIComponent(prefix.Prefix.split('/')[2]);
             });
         res.render('index', { pages: pages });
     });
 };
 
 exports.pages = function(req, res){
-    var page = req.query.page,
+    var page = encodeURIComponent(req.query.page),
         breakpoint = req.query.breakpoint || 'mobile';
     // get the available pages
     s3.listObjects({Bucket: 'aws-frontend-store', Prefix: env + '/screenshots/', Delimiter: '/'}, function(err, data) {
         var pages = data.CommonPrefixes
             // pull out page url (3rd part of the key)
             .map(function(prefix) {
-                return prefix.Prefix.split('/')[2];
+                return decodeURIComponent(prefix.Prefix.split('/')[2]);
             });
         // get the available breakpoints
         s3.listObjects({Bucket: 'aws-frontend-store', Prefix: env + '/screenshots/' + page + '/', Delimiter: '/'}, function(err, data) {
@@ -49,9 +50,10 @@ exports.pages = function(req, res){
                     })
                     // pull out src and date
                     .map(function(content) {
+                        console.log(content.Key)
                         return {
-                            date: content.Key.split('/').slice(4, 8).join('/').split('.').shift(),
-                            src: 'https://' + data.Name + '.s3.amazonaws.com/' + content.Key
+                            date: moment.unix(parseInt(content.Key.split('/').pop().split('.')[1], 10)).format('ddd Mo, h:mma'),
+                            src: encodeURI('https://' + data.Name + '.s3.amazonaws.com/' + content.Key)
                         }
                     })
                     // take first 5
