@@ -50,9 +50,8 @@ exports.pages = function(req, res){
                     })
                     // pull out src and date
                     .map(function(content) {
-                        console.log(content.Key)
                         return {
-                            date: moment.unix(parseInt(content.Key.split('/').pop().split('.')[1], 10)).format('ddd Mo, h:mma'),
+                            date: moment.unix(parseInt(content.Key.split('/').pop().split('.')[1], 10)).format('ddd Do, h:mma'),
                             src: encodeURI('https://' + data.Name + '.s3.amazonaws.com/' + content.Key)
                         }
                     })
